@@ -1,11 +1,11 @@
-import { useEffect, useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 
 const AD_CLIENT = 'ca-pub-9014156375881181';
 const AD_SLOT = '2021727598';
 
 declare global {
   interface Window {
-    adsbygoogle?: Record<string, unknown>[];
+    adsbygoogle?: Array<Record<string, unknown>>;
   }
 }
 
@@ -14,14 +14,15 @@ type Props = {
 };
 
 /**
- * Auto responsive display unit. Requires `adsbygoogle.js` in index.html.
- * One push() per mounted instance.
+ * Auto responsive display unit. Requires queue init + adsbygoogle.js in index.html.
+ * useLayoutEffect runs after the <ins> is in the DOM; one push() per mounted instance.
  */
 export function AdSense({ className }: Props) {
+  const insRef = useRef<HTMLModElement>(null);
   const pushed = useRef(false);
 
-  useEffect(() => {
-    if (pushed.current) return;
+  useLayoutEffect(() => {
+    if (!insRef.current || pushed.current) return;
     pushed.current = true;
     try {
       (window.adsbygoogle = window.adsbygoogle || []).push({});
@@ -32,6 +33,7 @@ export function AdSense({ className }: Props) {
 
   return (
     <ins
+      ref={insRef}
       className={`adsbygoogle ${className ?? ''}`.trim()}
       style={{ display: 'block' }}
       data-ad-client={AD_CLIENT}

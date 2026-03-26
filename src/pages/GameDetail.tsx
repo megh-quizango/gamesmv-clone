@@ -146,7 +146,7 @@ export default function GameDetail() {
                   <div className="ad">
                     <p>Advertisement</p>
                     <div>
-                      <AdSense />
+                      <AdSense key={slug} />
                     </div>
                   </div>
                   <div className="gameInfo">
@@ -343,7 +343,7 @@ export default function GameDetail() {
             <div className="ad">
               <p>Advertisement</p>
               <div>
-                <AdSense />
+                <AdSense key={slug} />
               </div>
             </div>
           </div>
