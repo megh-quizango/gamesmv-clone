@@ -4,6 +4,7 @@ import { useGameDetails } from '@/hooks/use-games';
 import { useSidebarGameCount } from '@/hooks/use-mobile';
 import { MOCK_GAMES } from '@/lib/mock-data';
 import { GameIconImg } from '@/components/shared/GameIconImg';
+import { AdSense } from '@/components/shared/AdSense';
 import { onScreenshotImageError } from '@/lib/image-fallback';
 
 const hotGames = MOCK_GAMES.filter((g) => g.isHot);
@@ -145,7 +146,7 @@ export default function GameDetail() {
                   <div className="ad">
                     <p>Advertisement</p>
                     <div>
-                      <span>Advertisement</span>
+                      <AdSense />
                     </div>
                   </div>
                   <div className="gameInfo">
@@ -342,7 +343,7 @@ export default function GameDetail() {
             <div className="ad">
               <p>Advertisement</p>
               <div>
-                <span>Advertisement</span>
+                <AdSense />
               </div>
             </div>
           </div>
