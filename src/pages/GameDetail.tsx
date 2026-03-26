@@ -21,9 +21,17 @@ function StarRating({ rating }: { rating: number }) {
   );
 }
 
+function safeDecodePathSegment(s: string): string {
+  try {
+    return decodeURIComponent(s);
+  } catch {
+    return s;
+  }
+}
+
 export default function GameDetail() {
   const [, params] = useRoute('/game/:slug');
-  const slug = params?.slug || '';
+  const slug = safeDecodePathSegment(params?.slug ?? '');
   const { data: game, isLoading } = useGameDetails(slug);
   const [showMoreDesc, setShowMoreDesc] = useState(false);
   const sidebarCount = useSidebarGameCount();
