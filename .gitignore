@@ -1,0 +1,5 @@
+# Mirrored from root `games/` by Vite during dev — source of truth is `/games` at repo root
+public/games
+node_modules
+dist
+

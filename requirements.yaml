@@ -1,0 +1,18 @@
+packages:
+  "framer-motion": "For page transitions and smooth interactive animations"
+  "lucide-react": "For UI icons across the application"
+  "clsx": "For conditional class name joining"
+  "tailwind-merge": "For merging tailwind classes without conflicts"
+
+images:
+  - path: "artifacts/gamesmv-clone/public/images/hero-banner.png"
+    description: "Dark, abstract gaming controller background with glowing green neon accents, out of focus, high quality, 4k"
+    aspect_ratio: "16:9"
+  - path: "artifacts/gamesmv-clone/public/images/logo-icon.png"
+    description: "A minimalist, premium letter 'M' and 'V' intertwined, glowing green on a dark background, gaming aesthetic"
+    aspect_ratio: "1:1"
+
+notes:
+  - Application uses mock data as requested since there is no backend API defined.
+  - Using a dark gaming aesthetic with green accents.
+  - Implemented client-side search and filtering based on the mock data.
