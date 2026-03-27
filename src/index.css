@@ -1149,14 +1149,21 @@ header .container .header-hamburger__line {
   box-sizing: border-box;
 }
 
-/* Info row: sits beside .gameInfo */
-.infoBox .game-detail-ad {
+/*
+ * Same wrapper + width in info row and right sidebar so the ad card is identical everywhere.
+ */
+.game-detail-adSlot {
+  width: 382px;
+  max-width: 100%;
+  box-sizing: border-box;
   flex-shrink: 0;
+}
+
+.infoBox .game-detail-adSlot {
   margin-right: 15px;
 }
 
-/* Right sidebar ad: no .listGame here — that class adds a second outer panel via .container .listGame */
-.detailBox .rightBox .rightBox-adSlot {
+.detailBox .rightBox .game-detail-adSlot {
   margin-top: 10px;
   position: sticky;
   top: 12px;
@@ -1254,18 +1261,12 @@ footer .container .footBot > p {
   .detailBox .leftBox .centerTop .centerModel {
     width: calc(100% - 390px);
   }
+  /* Same width as default so game-detail ad matches info row (382px card + 10px gap) */
   .detailBox .rightBox {
-    width: 280px;
+    width: 382px;
   }
   .detailBox .leftBox {
-    width: calc(100% - 290px);
-  }
-  /* Narrow sidebar: fit ad within column */
-  .detailBox .rightBox .rightBox-adSlot .game-detail-ad {
-    min-width: 0;
-  }
-  .detailBox .rightBox .rightBox-adSlot .game-detail-ad > div {
-    min-width: 0;
+    width: calc(100% - 392px);
   }
 }
 
@@ -1436,9 +1437,13 @@ footer .container .footBot > p {
   .detailBox .leftBox .centerTop .centerModel .topInfo .infoBox {
     flex-direction: column;
   }
-  .detailBox .leftBox .centerTop .centerModel .topInfo .infoBox .game-detail-ad {
+  .detailBox .leftBox .centerTop .centerModel .topInfo .infoBox .game-detail-adSlot {
     margin-right: 0;
     margin-bottom: 12px;
+    width: 100%;
+    max-width: 100%;
+  }
+  .detailBox .leftBox .centerTop .centerModel .topInfo .infoBox .game-detail-ad {
     min-width: 0;
     width: 100%;
     max-width: 100%;

@@ -143,7 +143,9 @@ export default function GameDetail() {
             <div className="centerModel">
               <div className="topInfo">
                 <div className="infoBox">
-                  <GameDetailAdSlot key={slug} slug={slug} />
+                  <div className="game-detail-adSlot">
+                    <GameDetailAdSlot key={slug} slug={slug} />
+                  </div>
                   <div className="gameInfo">
                     <div className="gTop">
                       <div className="gLeft">
@@ -334,7 +336,7 @@ export default function GameDetail() {
               ))}
             </ul>
           </div>
-          <div className="rightBox-adSlot">
+          <div className="game-detail-adSlot">
             <GameDetailAdSlot key={slug} slug={slug} />
           </div>
         </div>
