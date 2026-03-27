@@ -1149,21 +1149,18 @@ header .container .header-hamburger__line {
   margin-right: 15px;
 }
 
-.listGame.adBox {
+/* Right sidebar ad: no .listGame here — that class adds a second outer panel via .container .listGame */
+.detailBox .rightBox .rightBox-adSlot {
   margin-top: 10px;
+  position: sticky;
+  top: 12px;
+  z-index: 2;
 }
 
 /* ===== RIGHT SIDEBAR ===== */
 .detailBox .rightBox {
   width: 382px;
   flex-shrink: 0;
-}
-
-/* Sticky ad: stays in view while scrolling the long game detail column */
-.detailBox .rightBox .listGame.adBox {
-  position: sticky;
-  top: 12px;
-  z-index: 2;
 }
 
 /* ===== FOOTER ===== */
@@ -1258,10 +1255,10 @@ footer .container .footBot > p {
     width: calc(100% - 290px);
   }
   /* Narrow sidebar: fit ad within column */
-  .detailBox .rightBox .listGame.adBox .game-detail-ad {
+  .detailBox .rightBox .rightBox-adSlot .game-detail-ad {
     min-width: 0;
   }
-  .detailBox .rightBox .listGame.adBox .game-detail-ad > div {
+  .detailBox .rightBox .rightBox-adSlot .game-detail-ad > div {
     min-width: 0;
   }
 }

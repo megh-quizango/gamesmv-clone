@@ -334,7 +334,7 @@ export default function GameDetail() {
               ))}
             </ul>
           </div>
-          <div className="listGame adBox">
+          <div className="rightBox-adSlot">
             <GameDetailAdSlot key={slug} slug={slug} />
           </div>
         </div>
