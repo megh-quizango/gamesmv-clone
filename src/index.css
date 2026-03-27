@@ -1138,7 +1138,7 @@ header .container .header-hamburger__line {
   min-height: 280px;
   flex-shrink: 0;
   display: flex;
-  align-items: center;
+  align-items: stretch;
   justify-content: center;
   background: transparent;
   border-radius: 12px;
@@ -1287,6 +1287,26 @@ footer .container .footBot > p {
   }
   .detailBox .rightBox {
     width: 100%;
+  }
+  /* Match info-row ad: full width, no sticky (avoids zero-height / gap on narrow viewports) */
+  .detailBox .rightBox .game-detail-adSlot {
+    width: 100%;
+    max-width: 100%;
+    position: static;
+    top: auto;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .detailBox .rightBox .game-detail-ad {
+    width: 100%;
+    max-width: 100%;
+  }
+  .detailBox .rightBox .game-detail-ad > div {
+    width: 100%;
+    max-width: 100%;
+    min-height: 280px;
+    height: 280px;
+    box-sizing: border-box;
   }
   .detailBox .leftBox .centerTop .leftModel {
     width: 320px;

@@ -187,7 +187,7 @@ export function AdSense({
   }
 
   return (
-    <div className="w-full">
+    <div className="w-full" style={{ minHeight: containerHeight }}>
       <div
         ref={adRef}
         className={cn('relative flex w-full items-center justify-center', className)}
