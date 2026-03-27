@@ -1108,9 +1108,14 @@ header .container .header-hamburger__line {
   flex-shrink: 0;
 }
 
-/* Game detail page: one shell for info-row ad + right sidebar ad (see GameDetailAdSlot) */
+/*
+ * Game detail ads: one fixed footprint everywhere (info row + right sidebar).
+ * Outer 382px = 336px slot + 40px horizontal padding + 6px border (matches .rightBox width).
+ */
 .game-detail-ad {
-  min-width: 336px;
+  width: 382px;
+  max-width: 100%;
+  min-width: 0;
   background: rgba(255, 255, 255, 0.85);
   border-radius: 20px;
   display: flex;
@@ -1128,9 +1133,10 @@ header .container .header-hamburger__line {
 }
 
 .game-detail-ad > div {
-  min-width: 336px;
-  min-height: 280px;
   width: 100%;
+  height: 280px;
+  min-height: 280px;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1440,7 +1446,9 @@ footer .container .footBot > p {
   .detailBox .leftBox .centerTop .centerModel .topInfo .infoBox .game-detail-ad > div {
     min-width: 0;
     width: 100%;
-    max-width: 336px;
+    max-width: 100%;
+    height: 280px;
+    min-height: 280px;
     box-sizing: border-box;
   }
   footer .container .footBot {
