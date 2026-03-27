@@ -1149,7 +1149,7 @@ header .container .header-hamburger__line {
   box-sizing: border-box;
 }
 
-/* Right sidebar: promo grid (2×3 icons); whole card is a link */
+/* Right sidebar: promo grid (2×4 icons); cyan panel only around grid; whole card is a link */
 a.game-detail-ad--promo {
   text-decoration: none;
   color: inherit;
@@ -1162,28 +1162,34 @@ a.game-detail-ad--promo:focus-visible {
 }
 
 .game-detail-ad.game-detail-ad--promo > div.game-detail-ad__promoGrid {
+  /* overrides .game-detail-ad > div fixed 280px height */
   height: auto;
-  min-height: 280px;
+  min-height: 0;
   display: grid;
-  grid-template-columns: repeat(2, 84px);
-  grid-template-rows: repeat(3, 84px);
-  justify-content: center;
-  column-gap: 10px;
-  row-gap: 8px;
-  padding: 4px 0;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: auto;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 14px;
+  background: #c5f0ec;
+  box-sizing: border-box;
+  width: 100%;
+  align-content: start;
 }
 
 .game-detail-ad__promoCell {
-  width: 84px;
-  height: 84px;
+  aspect-ratio: 1;
+  width: 100%;
   min-height: 0;
-  border-radius: 10px;
+  min-width: 0;
+  border-radius: 12px;
   overflow: hidden;
-  background: rgba(200, 190, 230, 0.25);
+  border: 2px solid #fff;
+  background: rgba(255, 255, 255, 0.45);
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
 }
 
 .game-detail-ad__promoCell img {
@@ -1354,7 +1360,7 @@ footer .container .footBot > p {
   }
   .detailBox .rightBox .game-detail-ad--promo > div.game-detail-ad__promoGrid {
     height: auto;
-    min-height: 260px;
+    min-height: 0;
   }
   .detailBox .leftBox .centerTop .leftModel {
     width: 320px;

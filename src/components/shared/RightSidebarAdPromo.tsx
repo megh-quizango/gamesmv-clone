@@ -7,11 +7,11 @@ type Props = {
   currentGameId: string;
 };
 
-/** Right sidebar only: 2×3 icon grid; whole area links home. */
+/** Right sidebar only: 2×4 icon grid; whole area links home. */
 export function RightSidebarAdPromo({ currentGameId }: Props) {
   const gridGames = useMemo(() => {
     const pool = MOCK_GAMES.filter((g) => g.id !== currentGameId);
-    return pool.slice(0, 6);
+    return pool.slice(0, 8);
   }, [currentGameId]);
 
   return (
