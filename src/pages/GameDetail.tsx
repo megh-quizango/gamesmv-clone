@@ -343,7 +343,7 @@ export default function GameDetail() {
             <div className="ad">
               <p>Advertisement</p>
               <div>
-                <AdSense key={slug} />
+                <AdSense key={slug} placeholderHeight="250px" />
               </div>
             </div>
           </div>
