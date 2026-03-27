@@ -5,6 +5,7 @@ import { useSidebarGameCount } from '@/hooks/use-mobile';
 import { MOCK_GAMES } from '@/lib/mock-data';
 import { GameIconImg } from '@/components/shared/GameIconImg';
 import { GameDetailAdSlot } from '@/components/shared/GameDetailAdSlot';
+import { RightSidebarAdPromo } from '@/components/shared/RightSidebarAdPromo';
 import { onScreenshotImageError } from '@/lib/image-fallback';
 
 const hotGames = MOCK_GAMES.filter((g) => g.isHot);
@@ -337,7 +338,7 @@ export default function GameDetail() {
             </ul>
           </div>
           <div className="game-detail-adSlot">
-            <GameDetailAdSlot key={slug} slug={slug} />
+            <RightSidebarAdPromo key={slug} currentGameId={game.id} />
           </div>
         </div>
       </div>
