@@ -603,7 +603,7 @@ header .container .header-hamburger__line {
 }
 
 .detailBox .leftBox {
-  width: calc(100% - 350px);
+  width: calc(100% - 392px);
   min-width: 0;
 }
 
@@ -1108,18 +1108,24 @@ header .container .header-hamburger__line {
   flex-shrink: 0;
 }
 
+.infoBox .ad > p {
+  color: #607a98;
+}
+
+/* Same card treatment as .gameInfo (frosted white panel) */
 .infoBox .ad {
   min-width: 336px;
-  background: rgba(255, 255, 255, 0.5);
-  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  border: 1px dashed #c0b0e0;
+  border: 3px solid #fff;
+  box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.2);
   flex-shrink: 0;
   margin-right: 15px;
-  padding: 10px 12px 12px;
+  padding: 20px;
   box-sizing: border-box;
 }
 
@@ -1130,12 +1136,12 @@ header .container .header-hamburger__line {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(200, 190, 230, 0.3);
-  border-radius: 8px;
-  color: #8a6fee;
+  background: transparent;
+  border-radius: 12px;
+  color: #607a98;
   font-family: 'Fredoka', sans-serif;
-  font-size: 18px;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 500;
   box-sizing: border-box;
 }
 
@@ -1143,37 +1149,47 @@ header .container .header-hamburger__line {
   margin-top: 10px;
 }
 
+.listGame.adBox .ad > p {
+  color: #607a98;
+}
+
+/* Match .infoBox .ad dimensions and card (336×280 slot, same frosted panel) */
 .listGame.adBox .ad {
-  min-width: 300px;
-  background: rgba(255, 255, 255, 0.5);
-  border-radius: 12px;
+  min-width: 336px;
+  width: 100%;
+  max-width: 100%;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  border: 1px dashed #c0b0e0;
-  padding: 10px 12px 12px;
+  border: 3px solid #fff;
+  box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.2);
+  padding: 20px;
   box-sizing: border-box;
 }
 
 .listGame.adBox .ad > div {
-  width: 300px;
-  min-height: 250px;
+  min-width: 336px;
+  min-height: 280px;
+  width: 100%;
+  max-width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(200, 190, 230, 0.3);
-  border-radius: 8px;
-  color: #8a6fee;
+  background: transparent;
+  border-radius: 12px;
+  color: #607a98;
   font-family: 'Fredoka', sans-serif;
-  font-size: 18px;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 500;
   box-sizing: border-box;
 }
 
 /* ===== RIGHT SIDEBAR ===== */
 .detailBox .rightBox {
-  width: 340px;
+  width: 382px;
   flex-shrink: 0;
 }
 
@@ -1274,6 +1290,13 @@ footer .container .footBot > p {
   }
   .detailBox .leftBox {
     width: calc(100% - 290px);
+  }
+  /* Narrow sidebar: fit ad within column (same min-height as game-info ad) */
+  .detailBox .rightBox .listGame.adBox .ad {
+    min-width: 0;
+  }
+  .detailBox .rightBox .listGame.adBox .ad > div {
+    min-width: 0;
   }
 }
 
