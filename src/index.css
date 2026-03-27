@@ -1108,12 +1108,8 @@ header .container .header-hamburger__line {
   flex-shrink: 0;
 }
 
-.infoBox .ad > p {
-  color: #607a98;
-}
-
-/* Same card treatment as .gameInfo (frosted white panel) */
-.infoBox .ad {
+/* Game detail page: one shell for info-row ad + right sidebar ad (see GameDetailAdSlot) */
+.game-detail-ad {
   min-width: 336px;
   background: rgba(255, 255, 255, 0.85);
   border-radius: 20px;
@@ -1123,13 +1119,15 @@ header .container .header-hamburger__line {
   justify-content: flex-start;
   border: 3px solid #fff;
   box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.2);
-  flex-shrink: 0;
-  margin-right: 15px;
   padding: 20px;
   box-sizing: border-box;
 }
 
-.infoBox .ad > div {
+.game-detail-ad > p {
+  color: #607a98;
+}
+
+.game-detail-ad > div {
   min-width: 336px;
   min-height: 280px;
   width: 100%;
@@ -1143,48 +1141,16 @@ header .container .header-hamburger__line {
   font-size: 14px;
   font-weight: 500;
   box-sizing: border-box;
+}
+
+/* Info row: sits beside .gameInfo */
+.infoBox .game-detail-ad {
+  flex-shrink: 0;
+  margin-right: 15px;
 }
 
 .listGame.adBox {
   margin-top: 10px;
-}
-
-.listGame.adBox .ad > p {
-  color: #607a98;
-}
-
-/* Match .infoBox .ad dimensions and card (336×280 slot, same frosted panel) */
-.listGame.adBox .ad {
-  min-width: 336px;
-  width: 100%;
-  max-width: 100%;
-  background: rgba(255, 255, 255, 0.85);
-  border-radius: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  border: 3px solid #fff;
-  box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.2);
-  padding: 20px;
-  box-sizing: border-box;
-}
-
-.listGame.adBox .ad > div {
-  min-width: 336px;
-  min-height: 280px;
-  width: 100%;
-  max-width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: transparent;
-  border-radius: 12px;
-  color: #607a98;
-  font-family: 'Fredoka', sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  box-sizing: border-box;
 }
 
 /* ===== RIGHT SIDEBAR ===== */
@@ -1291,11 +1257,11 @@ footer .container .footBot > p {
   .detailBox .leftBox {
     width: calc(100% - 290px);
   }
-  /* Narrow sidebar: fit ad within column (same min-height as game-info ad) */
-  .detailBox .rightBox .listGame.adBox .ad {
+  /* Narrow sidebar: fit ad within column */
+  .detailBox .rightBox .listGame.adBox .game-detail-ad {
     min-width: 0;
   }
-  .detailBox .rightBox .listGame.adBox .ad > div {
+  .detailBox .rightBox .listGame.adBox .game-detail-ad > div {
     min-width: 0;
   }
 }
@@ -1467,14 +1433,14 @@ footer .container .footBot > p {
   .detailBox .leftBox .centerTop .centerModel .topInfo .infoBox {
     flex-direction: column;
   }
-  .detailBox .leftBox .centerTop .centerModel .topInfo .infoBox .ad {
+  .detailBox .leftBox .centerTop .centerModel .topInfo .infoBox .game-detail-ad {
     margin-right: 0;
     margin-bottom: 12px;
     min-width: 0;
     width: 100%;
     max-width: 100%;
   }
-  .detailBox .leftBox .centerTop .centerModel .topInfo .infoBox .ad > div {
+  .detailBox .leftBox .centerTop .centerModel .topInfo .infoBox .game-detail-ad > div {
     min-width: 0;
     width: 100%;
     max-width: 336px;

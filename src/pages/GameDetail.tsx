@@ -4,7 +4,7 @@ import { useGameDetails } from '@/hooks/use-games';
 import { useSidebarGameCount } from '@/hooks/use-mobile';
 import { MOCK_GAMES } from '@/lib/mock-data';
 import { GameIconImg } from '@/components/shared/GameIconImg';
-import { AdSense } from '@/components/shared/AdSense';
+import { GameDetailAdSlot } from '@/components/shared/GameDetailAdSlot';
 import { onScreenshotImageError } from '@/lib/image-fallback';
 
 const hotGames = MOCK_GAMES.filter((g) => g.isHot);
@@ -24,7 +24,7 @@ function StarRating({ rating }: { rating: number }) {
 export default function GameDetail() {
   const [, params] = useRoute('/game/:slug');
   const slug = params?.slug || '';
-  const { data: game, isLoading } = useGameDetails(slug);
+  const { data: game, isLoading, isError } = useGameDetails(slug);
   const [showMoreDesc, setShowMoreDesc] = useState(false);
   const sidebarCount = useSidebarGameCount();
 
@@ -52,7 +52,7 @@ export default function GameDetail() {
       .slice(0, 32);
   }, [game]);
 
-  if (isLoading) {
+  if (!slug || isLoading) {
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px' }}>
         <div style={{ width: '40px', height: '40px', border: '3px solid rgba(255,255,255,0.3)', borderTopColor: '#8a6fee', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
@@ -61,7 +61,7 @@ export default function GameDetail() {
     );
   }
 
-  if (!game) {
+  if (isError || !game) {
     return (
       <div style={{ textAlign: 'center', padding: '60px 20px', color: '#fff', fontFamily: 'Fredoka, sans-serif' }}>
         <h2 style={{ fontSize: '24px', marginBottom: '10px' }}>Game Not Found</h2>
@@ -143,12 +143,7 @@ export default function GameDetail() {
             <div className="centerModel">
               <div className="topInfo">
                 <div className="infoBox">
-                  <div className="ad">
-                    <p>Advertisement</p>
-                    <div>
-                      <AdSense key={slug} />
-                    </div>
-                  </div>
+                  <GameDetailAdSlot key={slug} slug={slug} />
                   <div className="gameInfo">
                     <div className="gTop">
                       <div className="gLeft">
@@ -340,12 +335,7 @@ export default function GameDetail() {
             </ul>
           </div>
           <div className="listGame adBox">
-            <div className="ad">
-              <p>Advertisement</p>
-              <div>
-                <AdSense key={slug} />
-              </div>
-            </div>
+            <GameDetailAdSlot key={slug} slug={slug} />
           </div>
         </div>
       </div>

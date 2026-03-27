@@ -62,6 +62,48 @@ function syncRootGamesToPublic(rootDir: string): void {
   cpSync(src, dest, { recursive: true });
 }
 
+/** Deep links (e.g. /game/:slug) must serve index.html so the client router runs after reload. */
+function createSpaHistoryFallbackMiddleware() {
+  return (
+    req: { method?: string; url?: string },
+    _res: unknown,
+    next: () => void,
+  ) => {
+    if (req.method !== "GET" && req.method !== "HEAD") return next();
+    const raw = req.url ?? "/";
+    const pathname = raw.split("?")[0] || "/";
+    if (pathname.startsWith("/@")) return next();
+    if (pathname.startsWith("/src/")) return next();
+    if (pathname.startsWith("/node_modules/")) return next();
+    if (pathname.startsWith("/assets/")) return next();
+    if (pathname.startsWith("/games/")) return next();
+    if (path.posix.extname(pathname)) return next();
+    const baseNorm = basePath.replace(/\/$/, "") || "";
+    const pathForCheck =
+      baseNorm && pathname.startsWith(baseNorm)
+        ? pathname.slice(baseNorm.length) || "/"
+        : pathname;
+    if (pathForCheck === "/" || pathForCheck === "/index.html") return next();
+    const qs = raw.includes("?") ? `?${raw.split("?").slice(1).join("?")}` : "";
+    const target =
+      baseNorm === "" ? "/index.html" : `${baseNorm}/index.html`;
+    req.url = `${target}${qs}`;
+    next();
+  };
+}
+
+function spaHistoryFallbackPlugin(): Plugin {
+  return {
+    name: "spa-history-fallback",
+    configureServer(server) {
+      server.middlewares.use(createSpaHistoryFallbackMiddleware());
+    },
+    configurePreviewServer(server) {
+      server.middlewares.use(createSpaHistoryFallbackMiddleware());
+    },
+  };
+}
+
 function gamesSyncPlugin(rootDir: string): Plugin {
   return {
     name: "sync-root-games-to-public",
@@ -105,6 +147,7 @@ export default defineConfig({
   base: basePath,
   plugins: [
     gamesSyncPlugin(path.resolve(import.meta.dirname)),
+    spaHistoryFallbackPlugin(),
     react(),
     tailwindcss(),
     runtimeErrorOverlay(),
