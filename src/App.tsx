@@ -25,7 +25,6 @@ function Router() {
     <AppLayout>
       <Switch>
         <Route path="/" component={Home} />
-        <Route path="/games-hub" component={Home} />
         <Route path="/game/:slug" component={GameDetail} />
         <Route path="/category/:category" component={Category} />
         <Route path="/platform/:platform" component={PlatformPage} />

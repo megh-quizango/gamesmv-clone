@@ -1,4 +1,4 @@
-import { defineConfig } from "vite";
+import { defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import path from "path";
@@ -19,8 +19,6 @@ const port = Number(rawPort);
 if (Number.isNaN(port) || port <= 0) {
   throw new Error(`Invalid PORT value: "${rawPort}"`);
 }
-
-const basePath = process.env.BASE_PATH ?? "/";
 
 /** Names under `games/` that are not package-id folders */
 const GAMES_NON_GAME_DIRS = new Set(["categories"]);
@@ -62,8 +60,9 @@ function syncRootGamesToPublic(rootDir: string): void {
   cpSync(src, dest, { recursive: true });
 }
 
-/** Deep links (e.g. /game/:slug) must serve index.html so the client router runs after reload. */
-function createSpaHistoryFallbackMiddleware() {
+/** Deep links must serve index.html; respect Vite `base` (e.g. /games-hub/). */
+function createSpaHistoryFallbackMiddleware(basePath: string) {
+  const baseNorm = basePath.replace(/\/$/, "") || "";
   return (
     req: { method?: string; url?: string },
     _res: unknown,
@@ -72,17 +71,17 @@ function createSpaHistoryFallbackMiddleware() {
     if (req.method !== "GET" && req.method !== "HEAD") return next();
     const raw = req.url ?? "/";
     const pathname = raw.split("?")[0] || "/";
-    if (pathname.startsWith("/@")) return next();
-    if (pathname.startsWith("/src/")) return next();
-    if (pathname.startsWith("/node_modules/")) return next();
-    if (pathname.startsWith("/assets/")) return next();
-    if (pathname.startsWith("/games/")) return next();
-    if (path.posix.extname(pathname)) return next();
-    const baseNorm = basePath.replace(/\/$/, "") || "";
-    const pathForCheck =
+    const restAfterBase =
       baseNorm && pathname.startsWith(baseNorm)
         ? pathname.slice(baseNorm.length) || "/"
         : pathname;
+    if (restAfterBase.startsWith("/@")) return next();
+    if (restAfterBase.startsWith("/src/")) return next();
+    if (restAfterBase.startsWith("/node_modules/")) return next();
+    if (restAfterBase.startsWith("/assets/")) return next();
+    if (restAfterBase.startsWith("/games/")) return next();
+    if (path.posix.extname(pathname)) return next();
+    const pathForCheck = restAfterBase;
     if (pathForCheck === "/" || pathForCheck === "/index.html") return next();
     const qs = raw.includes("?") ? `?${raw.split("?").slice(1).join("?")}` : "";
     const target =
@@ -92,14 +91,14 @@ function createSpaHistoryFallbackMiddleware() {
   };
 }
 
-function spaHistoryFallbackPlugin(): Plugin {
+function spaHistoryFallbackPlugin(basePath: string): Plugin {
   return {
     name: "spa-history-fallback",
     configureServer(server) {
-      server.middlewares.use(createSpaHistoryFallbackMiddleware());
+      server.middlewares.use(createSpaHistoryFallbackMiddleware(basePath));
     },
     configurePreviewServer(server) {
-      server.middlewares.use(createSpaHistoryFallbackMiddleware());
+      server.middlewares.use(createSpaHistoryFallbackMiddleware(basePath));
     },
   };
 }
@@ -143,39 +142,46 @@ function gamesSyncPlugin(rootDir: string): Plugin {
   };
 }
 
-export default defineConfig({
-  base: basePath,
-  plugins: [
-    gamesSyncPlugin(path.resolve(import.meta.dirname)),
-    spaHistoryFallbackPlugin(),
-    react(),
-    tailwindcss(),
-    runtimeErrorOverlay(),
-  ],
-  resolve: {
-    alias: {
-      "@": path.resolve(import.meta.dirname, "src"),
-      "@assets": path.resolve(import.meta.dirname, "public"),
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), "");
+  const rawBase = env.BASE_PATH ?? "/";
+  const basePath =
+    rawBase === "/" ? "/" : rawBase.endsWith("/") ? rawBase : `${rawBase}/`;
+
+  return {
+    base: basePath,
+    plugins: [
+      gamesSyncPlugin(path.resolve(import.meta.dirname)),
+      spaHistoryFallbackPlugin(basePath),
+      react(),
+      tailwindcss(),
+      runtimeErrorOverlay(),
+    ],
+    resolve: {
+      alias: {
+        "@": path.resolve(import.meta.dirname, "src"),
+        "@assets": path.resolve(import.meta.dirname, "public"),
+      },
+      dedupe: ["react", "react-dom"],
     },
-    dedupe: ["react", "react-dom"],
-  },
-  root: path.resolve(import.meta.dirname),
-  build: {
-    outDir: path.resolve(import.meta.dirname, "dist/public"),
-    emptyOutDir: true,
-  },
-  server: {
-    port,
-    host: "0.0.0.0",
-    allowedHosts: true,
-    fs: {
-      strict: true,
-      deny: ["**/.*"],
+    root: path.resolve(import.meta.dirname),
+    build: {
+      outDir: path.resolve(import.meta.dirname, "dist/public"),
+      emptyOutDir: true,
     },
-  },
-  preview: {
-    port,
-    host: "0.0.0.0",
-    allowedHosts: true,
-  },
+    server: {
+      port,
+      host: "0.0.0.0",
+      allowedHosts: true,
+      fs: {
+        strict: true,
+        deny: ["**/.*"],
+      },
+    },
+    preview: {
+      port,
+      host: "0.0.0.0",
+      allowedHosts: true,
+    },
+  };
 });
