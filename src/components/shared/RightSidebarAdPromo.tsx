@@ -7,7 +7,7 @@ type Props = {
   currentGameId: string;
 };
 
-/** Right sidebar only: 2×4 icon grid; whole area links home. */
+/** Right sidebar only: 2×4 icon grid; whole area links to /games-hub. */
 export function RightSidebarAdPromo({ currentGameId }: Props) {
   const gridGames = useMemo(() => {
     const pool = MOCK_GAMES.filter((g) => g.id !== currentGameId);
@@ -16,8 +16,8 @@ export function RightSidebarAdPromo({ currentGameId }: Props) {
 
   return (
     <Link
-      href="/"
-      aria-label="Go to home page"
+      href="/games-hub"
+      aria-label="Go to games hub"
       className="ad game-detail-ad game-detail-ad--promo"
     >
       <p>Advertisement</p>
